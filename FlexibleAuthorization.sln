@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexibleAuthorization.Api", "src\FlexibleAuthorization.Api\FlexibleAuthorization.Api.csproj", "{1F79734B-D553-4F07-932C-A637FA0C38F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexibleAuthorization.Shared", "src\FlexibleAuthorization.Shared\FlexibleAuthorization.Shared.csproj", "{5279BB99-EC65-4D95-B4F0-1709F6A3FBAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F79734B-D553-4F07-932C-A637FA0C38F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F79734B-D553-4F07-932C-A637FA0C38F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F79734B-D553-4F07-932C-A637FA0C38F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F79734B-D553-4F07-932C-A637FA0C38F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5279BB99-EC65-4D95-B4F0-1709F6A3FBAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5279BB99-EC65-4D95-B4F0-1709F6A3FBAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5279BB99-EC65-4D95-B4F0-1709F6A3FBAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5279BB99-EC65-4D95-B4F0-1709F6A3FBAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

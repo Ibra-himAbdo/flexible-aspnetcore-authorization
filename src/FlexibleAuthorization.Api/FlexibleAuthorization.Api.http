@@ -1,0 +1,6 @@
+@FlexibleAuthorization.Api_HostAddress = http://localhost:5260
+
+GET {{FlexibleAuthorization.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
