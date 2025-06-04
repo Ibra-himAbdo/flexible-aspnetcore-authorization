@@ -7,7 +7,24 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Ardalis.GuardClauses" Version="5.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.5" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.5">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Scalar.AspNetCore" Version="2.4.8" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FlexibleAuthorization.Shared\FlexibleAuthorization.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Data\Migrations\" />
     </ItemGroup>
 
 </Project>
