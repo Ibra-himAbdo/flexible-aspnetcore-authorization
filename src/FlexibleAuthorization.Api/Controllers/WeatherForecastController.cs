@@ -1,5 +1,6 @@
 namespace FlexibleAuthorization.Api.Controllers;
 
+[Authorize(Permissions.Forecast)]
 [ApiController]
 [Route("[controller]")]
 public class WeatherForecastController(ILogger<WeatherForecastController> logger) : ControllerBase

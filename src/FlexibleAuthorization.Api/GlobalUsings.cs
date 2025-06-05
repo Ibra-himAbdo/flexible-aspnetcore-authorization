@@ -1,3 +1,4 @@
+global using AuthorizeAttribute = FlexibleAuthorization.Shared.Authorization.AuthorizeAttribute;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.OpenApi;
 global using Microsoft.AspNetCore.Authentication;

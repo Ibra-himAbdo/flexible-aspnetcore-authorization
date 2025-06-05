@@ -1,4 +1,4 @@
-global using AuthorizeAttribute = FlexibleAuthorization.Shared.Authorization.AuthorizeAttribute;
+
 
 namespace FlexibleAuthorization.Api.Controllers;
 public class TestController : BaseApiController
