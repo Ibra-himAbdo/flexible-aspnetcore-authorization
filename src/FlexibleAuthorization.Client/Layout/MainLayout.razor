@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+@inject ICookieAuthenticationStateProvider CookieAuthenticationStateProvider
+<div class="page">
+    <div class="sidebar">
+        <NavMenu/>
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <AuthorizeView>
+                <Authorized>
+                    <a href="claims">Hello, @context.User.Identity?.Name!</a>
+                    <button class="nav-link btn btn-link" @onclick="CookieAuthenticationStateProvider.LogoutAsync">
+                        Logout
+                    </button>
+                </Authorized>
+            </AuthorizeView>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>

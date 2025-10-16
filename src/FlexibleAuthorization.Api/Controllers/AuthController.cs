@@ -17,11 +17,11 @@ public class AuthController : BaseApiController
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginModel model)
+    public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginModel model)
     {
         User? user = await _userManager.FindByNameAsync(model.UserName);
         if (user is not null && await _userManager.CheckPasswordAsync(user, model.Password))
-            return Ok(new { Token = await GenerateToken(user) });
+            return Ok(new LoginResponse(Token: await GenerateToken(user)));
         return Unauthorized(new { Message = "Invalid username or password" });
     }
 

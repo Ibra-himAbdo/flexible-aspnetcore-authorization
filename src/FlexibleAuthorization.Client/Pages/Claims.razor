@@ -1,0 +1,56 @@
+@page "/claims"
+@attribute [Authorize]
+@inject AuthenticationStateProvider AuthStateProvider
+
+<PageTitle>User Claims</PageTitle>
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0 custom-card">
+        <div class="card-header custom-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0 text-white">
+                <i class="bi bi-shield-lock"></i> Your Claims
+            </h4>
+            <small class="text-light">Authenticated Area</small>
+        </div>
+        <div class="card-body">
+            <AuthorizeView>
+                <Authorized>
+                    <p class="text-muted mb-4">
+                        Below are the claims associated with your current login:
+                    </p>
+
+                    <div class="table-responsive mt-3">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                            <tr>
+                                <th scope="col"><i class="bi bi-tag"></i> Claim Type</th>
+                                <th scope="col"><i class="bi bi-info-circle"></i> Value</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (Claim claim in context.User.Claims)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@claim.Type</td>
+                                    <td><code>@claim.Value</code></td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </Authorized>
+
+                <NotAuthorized>
+                    <div class="alert alert-warning text-center mt-3" role="alert">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        You must be logged in to view your claims.
+                    </div>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+
+        <div class="card-footer text-end small text-secondary">
+            Last updated: @DateTime.Now.ToString("f")
+        </div>
+    </div>
+</div>

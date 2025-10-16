@@ -36,9 +36,16 @@ builder.Services.AddAuthorization()
 
 builder.Services.AddScoped<DbInitializer>();
 
+// injection of custom authorization policy provider and handler
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, FlexibleAuthorizationPolicyProvider>();
 
+builder.Services.AddCors(options => options.AddDefaultPolicy(policyBuilder =>
+{
+    policyBuilder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+}));
 
 WebApplication app = builder.Build();
 
@@ -82,6 +89,7 @@ catch (Exception ex)
 
 app.UseHttpsRedirection();
 
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 

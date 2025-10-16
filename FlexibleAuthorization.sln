@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexibleAuthorization.Api",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexibleAuthorization.Shared", "src\FlexibleAuthorization.Shared\FlexibleAuthorization.Shared.csproj", "{5279BB99-EC65-4D95-B4F0-1709F6A3FBAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexibleAuthorization.Client", "src\FlexibleAuthorization.Client\FlexibleAuthorization.Client.csproj", "{F4EEE75E-4E0A-46CD-8C6D-E3F47D213614}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{5279BB99-EC65-4D95-B4F0-1709F6A3FBAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5279BB99-EC65-4D95-B4F0-1709F6A3FBAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5279BB99-EC65-4D95-B4F0-1709F6A3FBAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4EEE75E-4E0A-46CD-8C6D-E3F47D213614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4EEE75E-4E0A-46CD-8C6D-E3F47D213614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4EEE75E-4E0A-46CD-8C6D-E3F47D213614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4EEE75E-4E0A-46CD-8C6D-E3F47D213614}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

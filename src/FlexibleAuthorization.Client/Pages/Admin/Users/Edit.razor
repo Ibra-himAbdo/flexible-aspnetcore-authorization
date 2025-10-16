@@ -1,0 +1,9 @@
+﻿@page "/admin/users/{userId}"
+@namespace FlexibleAuthorization.Client.Pages.Users
+@attribute [Authorize(Permissions.ManageUsers)]
+
+<PageTitle>Users - Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>User</h2>

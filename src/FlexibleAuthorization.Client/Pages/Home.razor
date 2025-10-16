@@ -1,0 +1,25 @@
+﻿@page "/"
+@attribute [Authorize]
+
+@inject ICookieAuthenticationStateProvider CookieAuthenticationStateProvider
+@inject NavigationManager Navigation
+
+<PageTitle>Home</PageTitle>
+
+<div>
+    <h1>Hello, world!</h1>
+
+    Welcome to your new app.
+
+    <button class="btn btn-danger" @onclick="Logout">Logout</button>
+</div>
+
+@code {
+
+    private async Task Logout()
+    {
+        await CookieAuthenticationStateProvider.LogoutAsync();
+        Navigation.NavigateTo("/login");
+    }
+
+}
