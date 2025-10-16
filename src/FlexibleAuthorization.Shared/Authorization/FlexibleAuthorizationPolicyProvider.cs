@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Shared.Authorization;
+namespace FlexibleAuthorization.Shared;
 
 public class FlexibleAuthorizationPolicyProvider(
     IOptions<AuthorizationOptions> options)

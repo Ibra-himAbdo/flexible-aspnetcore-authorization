@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Shared.Dtos;
+namespace FlexibleAuthorization.Shared;
 
 public class UserDto
 {

@@ -1,19 +1,17 @@
-
-
-namespace FlexibleAuthorization.Api.Controllers;
+namespace FlexibleAuthorization.Api;
 public class TestController : BaseApiController
 {
     [HttpGet("GetAllPermissions")]
     public IActionResult GetAllPermissions()
     {
-        var permissions = PermissionsProvider.GetAll();
+        List<Permissions> permissions = PermissionsProvider.GetAll();
         return Ok(permissions);
     }
     
     [HttpGet("GetPolicyNameFor/{permission}")]
     public IActionResult GetPolicyNameFor(Permissions permission)
     {
-        var policyName = PolicyNameHelper.GeneratePolicyNameFor(permission);
+        string policyName = PolicyNameHelper.GeneratePolicyNameFor(permission);
         return Ok(policyName);
     }
     
@@ -25,7 +23,7 @@ public class TestController : BaseApiController
             return BadRequest("Invalid policy name format.");
         }
 
-        var permissions = PolicyNameHelper.GetPermissionsFrom(policyName);
+        Permissions permissions = PolicyNameHelper.GetPermissionsFrom(policyName);
         return Ok(permissions);
     }
     

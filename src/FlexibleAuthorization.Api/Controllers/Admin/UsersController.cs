@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Api.Controllers.Admin;
+namespace FlexibleAuthorization.Api;
 
 [Route("api/admin/[controller]")]
 public class UsersController : BaseApiController
@@ -14,16 +14,16 @@ public class UsersController : BaseApiController
     [Authorize(Permissions.ViewUsers | Permissions.ManageUsers)]
     public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
     {
-        var users = await _userManager.Users
+        List<User> users = await _userManager.Users
             .OrderBy(u => u.UserName)
             .ToListAsync();
 
-        var userDtos = new List<UserDto>();
+        List<UserDto> userDtos = new List<UserDto>();
 
-        foreach (var user in users)
+        foreach (User user in users)
         {
-            var roles = await _userManager.GetRolesAsync(user);
-            var dto = new UserDto(
+            IList<string> roles = await _userManager.GetRolesAsync(user);
+            UserDto dto = new UserDto(
                 user.Id,
                 user.UserName ?? string.Empty,
                 user.Email ?? string.Empty,
@@ -42,14 +42,14 @@ public class UsersController : BaseApiController
     [Authorize(Permissions.ViewUsers)]
     public async Task<ActionResult<UserDto>> GetUser(string id)
     {
-        var user = await _userManager.FindByIdAsync(id);
+        User? user = await _userManager.FindByIdAsync(id);
 
         if (user is null)
             return NotFound();
 
-        var dto = new UserDto(user.Id, user.UserName ?? string.Empty, user.Email ?? string.Empty);
+        UserDto dto = new UserDto(user.Id, user.UserName ?? string.Empty, user.Email ?? string.Empty);
 
-        var roles = await _userManager.GetRolesAsync(user);
+        IList<string> roles = await _userManager.GetRolesAsync(user);
 
         dto.Roles.AddRange(roles);
 
@@ -66,7 +66,7 @@ public class UsersController : BaseApiController
         if (id != updatedUser.Id)
             return BadRequest();
 
-        var user = await _userManager.FindByIdAsync(id);
+        User? user = await _userManager.FindByIdAsync(id);
 
         if (user is null)
             return NotFound();
@@ -76,19 +76,15 @@ public class UsersController : BaseApiController
 
         await _userManager.UpdateAsync(user);
 
-        var currentRoles = await _userManager.GetRolesAsync(user);
-        var addedRoles = updatedUser.Roles.Except(currentRoles);
-        var removedRoles = currentRoles.Except(updatedUser.Roles);
+        IList<string> currentRoles = await _userManager.GetRolesAsync(user);
+        List<string> addedRoles = updatedUser.Roles.Except(currentRoles).ToList();
+        List<string> removedRoles = currentRoles.Except(updatedUser.Roles).ToList();
 
-        if (addedRoles.Any())
-        {
+        if (addedRoles.Count != 0)
             await _userManager.AddToRolesAsync(user, addedRoles);
-        }
 
-        if (removedRoles.Any())
-        {
+        if (removedRoles.Count != 0)
             await _userManager.RemoveFromRolesAsync(user, removedRoles);
-        }
 
         return NoContent();
     }

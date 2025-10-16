@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Api.Controllers;
+namespace FlexibleAuthorization.Api;
 
 public class AuthController : BaseApiController
 {
@@ -19,7 +19,7 @@ public class AuthController : BaseApiController
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
-        var user = await _userManager.FindByNameAsync(model.UserName);
+        User? user = await _userManager.FindByNameAsync(model.UserName);
         if (user is not null && await _userManager.CheckPasswordAsync(user, model.Password))
             return Ok(new { Token = await GenerateToken(user) });
         return Unauthorized(new { Message = "Invalid username or password" });
@@ -28,34 +28,34 @@ public class AuthController : BaseApiController
 
     private async Task<string> GenerateToken(User user)
     {
-        var userRoleNames = await _userManager.GetRolesAsync(user);
-        var roleClaims = new List<Claim>();
-        var aggregatedPermissions = Permissions.None;
-        foreach (var roleName in userRoleNames)
+        IList<string> userRoleNames = await _userManager.GetRolesAsync(user);
+        List<Claim> roleClaims = [];
+        Permissions aggregatedPermissions = Permissions.None;
+        foreach (string roleName in userRoleNames)
         {
-            var role = await _roleManager.FindByNameAsync(roleName);
+            Role? role = await _roleManager.FindByNameAsync(roleName);
             if (role is null) continue;
             roleClaims.Add(new Claim(ClaimTypes.Role, roleName));
             aggregatedPermissions |= role.Permissions;
         }
 
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.UserName!),
-            new Claim(CustomClaimTypes.Permissions, ((int)aggregatedPermissions).ToString())
-        };
+        List<Claim> claims =
+        [
+            new(ClaimTypes.NameIdentifier, user.Id),
+            new(ClaimTypes.Name, user.UserName!),
+            new(CustomClaimTypes.Permissions, ((int)aggregatedPermissions).ToString())
+        ];
         claims.AddRange(roleClaims);
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
+        SigningCredentials signingCredentials = new(key, SecurityAlgorithms.HmacSha256);
 
-        var token = new JwtSecurityToken(
+        JwtSecurityToken token = new JwtSecurityToken(
             issuer: null,
             audience: null,
             claims: claims,
             expires: DateTime.Now.AddDays(1),
-            signingCredentials: creds);
+            signingCredentials: signingCredentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }

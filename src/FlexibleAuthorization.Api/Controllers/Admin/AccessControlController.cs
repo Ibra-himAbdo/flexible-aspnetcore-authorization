@@ -1,6 +1,4 @@
-using FlexibleAuthorization.Shared;
-
-namespace FlexibleAuthorization.Api.Controllers.Admin;
+namespace FlexibleAuthorization.Api;
 
 [Route("api/Admin/[controller]")]
 public class AccessControlController : BaseApiController
@@ -16,10 +14,10 @@ public class AccessControlController : BaseApiController
     [Authorize(Permissions.ViewAccessControl)]
     public async Task<ActionResult<AccessControlVm>> GetConfiguration()
     {
-        var roles = await _roleManager.Roles
+        List<Role> roles = await _roleManager.Roles
             .ToListAsync();
 
-        var roleDtos = roles
+        List<RoleDto> roleDtos = roles
             .Select(r => new RoleDto(r.Id, r.Name ?? string.Empty, r.Permissions))
             .OrderBy(r => r.Name)
             .ToList();
@@ -32,7 +30,7 @@ public class AccessControlController : BaseApiController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UpdateConfiguration(RoleDto updatedRole)
     {
-        var role = await _roleManager.FindByIdAsync(updatedRole.Id);
+        Role? role = await _roleManager.FindByIdAsync(updatedRole.Id);
 
         if (role == null) return NoContent();
         

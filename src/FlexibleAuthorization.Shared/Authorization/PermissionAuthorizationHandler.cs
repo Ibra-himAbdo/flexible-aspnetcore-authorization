@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Shared.Authorization;
+namespace FlexibleAuthorization.Shared;
 
 public class PermissionAuthorizationHandler
     : AuthorizationHandler<PermissionAuthorizationRequirement>
@@ -7,13 +7,13 @@ public class PermissionAuthorizationHandler
         AuthorizationHandlerContext context,
         PermissionAuthorizationRequirement requirement)
     {
-        var permissionClaim = context.User.FindFirst(
+        Claim? permissionClaim = context.User.FindFirst(
             c => c.Type == CustomClaimTypes.Permissions);
 
         if (permissionClaim is null || !int.TryParse(permissionClaim.Value, out var permissionClaimValue))
             return Task.CompletedTask;
 
-        var userPermissions = (Permissions)permissionClaimValue;
+        Permissions userPermissions = (Permissions)permissionClaimValue;
 
         if ((userPermissions & requirement.Permissions) == 0)
             return Task.CompletedTask;

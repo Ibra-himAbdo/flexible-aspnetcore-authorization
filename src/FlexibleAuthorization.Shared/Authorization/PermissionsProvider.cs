@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Shared.Authorization;
+namespace FlexibleAuthorization.Shared;
 
 public static class PermissionsProvider
 {

@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Api.Security;
+namespace FlexibleAuthorization.Api;
 
 internal sealed class BearerSecuritySchemeTransformer(
     IAuthenticationSchemeProvider authenticationSchemeProvider)

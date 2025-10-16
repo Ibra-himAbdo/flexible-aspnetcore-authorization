@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Shared.Authorization;
+namespace FlexibleAuthorization.Shared;
 
 public static class PolicyNameHelper
 {
@@ -13,7 +13,7 @@ public static class PolicyNameHelper
 
     public static Permissions GetPermissionsFrom(string policyName)
     {
-        var permissionsValue = int.Parse(policyName[Prefix.Length..]!);
+        int permissionsValue = int.Parse(policyName[Prefix.Length..]!);
         return (Permissions)permissionsValue;
     }
 }

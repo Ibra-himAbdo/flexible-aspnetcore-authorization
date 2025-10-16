@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Api.Authorization;
+namespace FlexibleAuthorization.Api;
 
 public class ApplicationUserClaimsPrincipalFactory(
     UserManager<User> userManager,
@@ -11,17 +11,18 @@ public class ApplicationUserClaimsPrincipalFactory(
 {
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(User user)
     {
-        var identity = await base.GenerateClaimsAsync(user);
+        ClaimsIdentity identity = await base.GenerateClaimsAsync(user);
 
-        var userRoleNames = await UserManager.GetRolesAsync(user) ?? [];
+        IList<string> userRoleNames = await UserManager.GetRolesAsync(user) ?? [];
 
-        var userRoles = await RoleManager.Roles.Where(r =>
+        List<Role> userRoles = await RoleManager.Roles.Where(r =>
                 userRoleNames.Contains(r.Name!))
             .ToListAsync();
 
-        var userPermissions = userRoles.Aggregate(Permissions.None, (current, role) => current | role.Permissions);
+        Permissions userPermissions =
+            userRoles.Aggregate(Permissions.None, (current, role) => current | role.Permissions);
 
-        var permissionsValue = (int)userPermissions;
+        int permissionsValue = (int)userPermissions;
 
         identity.AddClaim(
             new Claim(CustomClaimTypes.Permissions, permissionsValue.ToString()));

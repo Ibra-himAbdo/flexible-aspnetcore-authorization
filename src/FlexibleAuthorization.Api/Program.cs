@@ -1,6 +1,6 @@
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-var connectionString = Guard.Against.NullOrEmpty(
+string connectionString = Guard.Against.NullOrEmpty(
     builder.Configuration
         .GetConnectionString("DefaultConnection"));
 
@@ -16,8 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi(options => { options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); });
 
 // Add JWT authentication
-builder.Services.
-    AddAuthorization()
+builder.Services.AddAuthorization()
     .AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -41,7 +40,7 @@ builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHand
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, FlexibleAuthorizationPolicyProvider>();
 
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -49,22 +48,37 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference(options =>
     {
-        options.WithTitle("E-CommerceTask Api Reference")
-            .WithTheme(ScalarTheme.Mars)
+        options.WithTitle("Authorization Api Reference")
+            .WithTheme(ScalarTheme.BluePlanet)
             .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
-            .WithDarkMode(true);
+            .EnableDarkMode();
         options.Authentication = new ScalarAuthenticationOptions
         {
             PreferredSecuritySchemes = [BearerSecuritySchemeTransformer.BearerSecuritySchemeName],
         };
     });
-    
-    // db initializer
-    using var scope = app.Services.CreateScope();
-    var services = scope.ServiceProvider;
-    var initializer = services.GetRequiredService<DbInitializer>();
+}
+
+#region db initializer
+
+using IServiceScope scope = app.Services.CreateScope();
+IServiceProvider services = scope.ServiceProvider;
+ApplicationDbContext dbContext = services.GetRequiredService<ApplicationDbContext>();
+DbInitializer initializer = services.GetRequiredService<DbInitializer>();
+ILoggerFactory loggerFactory = services.GetRequiredService<ILoggerFactory>();
+ILogger<Program> logger = loggerFactory.CreateLogger<Program>();
+
+try
+{
+    await dbContext.Database.MigrateAsync();
     await initializer.RunAsync();
 }
+catch (Exception ex)
+{
+    logger.LogError(ex, "An error occurred while migrating the database.");
+}
+
+#endregion
 
 app.UseHttpsRedirection();
 

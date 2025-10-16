@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Api.Models;
+namespace FlexibleAuthorization.Api;
 
 public class Role : IdentityRole
 {

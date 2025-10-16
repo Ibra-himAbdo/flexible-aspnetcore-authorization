@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Api.Controllers;
+namespace FlexibleAuthorization.Api;
 
 [Authorize(Permissions.Forecast)]
 [ApiController]

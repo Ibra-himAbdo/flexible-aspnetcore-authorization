@@ -10,7 +10,7 @@ public class AccessControlVm
     {
         Roles = roles;
 
-        foreach (var permission in
+        foreach (Permissions permission in
                  PermissionsProvider.GetAll()
                      .Where(permission => permission != Permissions.None))
         {

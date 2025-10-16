@@ -1,4 +1,4 @@
-namespace FlexibleAuthorization.Api.Controllers.Admin;
+namespace FlexibleAuthorization.Api;
 
 [Route("api/Admin/[controller]")]
 public class RolesController : BaseApiController
@@ -15,7 +15,7 @@ public class RolesController : BaseApiController
     [Authorize(Permissions.ViewRoles)]
     public async Task<ActionResult<IEnumerable<RoleDto>>> GetRoles()
     {
-        var roles = await _roleManager.Roles
+        List<Role> roles = await _roleManager.Roles
             .OrderBy(r => r.Name)
             .ToListAsync();
 
@@ -30,7 +30,7 @@ public class RolesController : BaseApiController
     [Authorize(Permissions.ManageRoles)]
     public async Task<ActionResult<RoleDto>> PostRole(RoleDto newRole)
     {
-        var role = new Role { Name = newRole.Name };
+        Role role = new Role { Name = newRole.Name };
 
         await _roleManager.CreateAsync(role);
 
@@ -50,21 +50,14 @@ public class RolesController : BaseApiController
             return BadRequest();
         }
 
-        var role = await _roleManager.FindByIdAsync(id);
+        Role? role = await _roleManager.FindByIdAsync(id);
 
         if (role == null)
-        {
             return NotFound();
-        }
 
         role.Name = updatedRole.Name;
 
         await _roleManager.UpdateAsync(role);
-
-        if (role == null)
-        {
-            return NotFound();
-        }
 
         return NoContent();
     }
@@ -76,7 +69,7 @@ public class RolesController : BaseApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteRole(string id)
     {
-        var role = await _roleManager.FindByIdAsync(id);
+        Role? role = await _roleManager.FindByIdAsync(id);
         if (role == null)
         {
             return NotFound();

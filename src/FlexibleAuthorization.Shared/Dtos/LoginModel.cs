@@ -1,3 +1,3 @@
-namespace FlexibleAuthorization.Shared.Dtos;
+namespace FlexibleAuthorization.Shared;
 
 public record LoginModel(string UserName, string Password);
