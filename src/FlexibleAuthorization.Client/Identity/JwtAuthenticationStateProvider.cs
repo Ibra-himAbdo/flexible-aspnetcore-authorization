@@ -3,7 +3,7 @@ namespace FlexibleAuthorization.Client;
 public class JwtAuthenticationStateProvider(IAuthApi authApi, ILocalStorageService localStorage)
     : AuthenticationStateProvider, IJwtAuthenticationStateProvider
 {
-    private const string AuthLocalStorageKey = "auth_token";
+    public const string AuthLocalStorageKey = "auth_token";
     private readonly ClaimsPrincipal _unauthenticated = new(new ClaimsIdentity());
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
