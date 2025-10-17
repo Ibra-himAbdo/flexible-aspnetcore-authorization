@@ -1,6 +1,6 @@
 namespace FlexibleAuthorization.Client;
 
-public interface ICookieAuthenticationStateProvider
+public interface IJwtAuthenticationStateProvider
 {
     Task<AuthResult> LoginAsync(LoginModel credentials);
     Task LogoutAsync();

@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-@inject ICookieAuthenticationStateProvider CookieAuthenticationStateProvider
+@inject IJwtAuthenticationStateProvider JwtAuthenticationStateProvider
 <div class="page">
     <div class="sidebar">
         <NavMenu/>
@@ -10,7 +10,7 @@
             <AuthorizeView>
                 <Authorized>
                     <a href="claims">Hello, @context.User.Identity?.Name!</a>
-                    <button class="nav-link btn btn-link" @onclick="CookieAuthenticationStateProvider.LogoutAsync">
+                    <button class="nav-link btn btn-link" @onclick="JwtAuthenticationStateProvider.LogoutAsync">
                         Logout
                     </button>
                 </Authorized>

@@ -12,7 +12,7 @@ public partial class Login
     {
         _loading = true;
 
-        AuthResult result = await CookieAuthenticationStateProvider.LoginAsync(Model!);
+        AuthResult result = await JwtAuthenticationStateProvider.LoginAsync(Model!);
 
         if (result.Succeeded)
         {

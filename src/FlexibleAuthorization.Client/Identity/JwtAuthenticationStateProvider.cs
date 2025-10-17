@@ -1,7 +1,7 @@
 namespace FlexibleAuthorization.Client;
 
-public class CookieAuthenticationStateProvider(IAuthApi authApi, ILocalStorageService localStorage)
-    : AuthenticationStateProvider, ICookieAuthenticationStateProvider
+public class JwtAuthenticationStateProvider(IAuthApi authApi, ILocalStorageService localStorage)
+    : AuthenticationStateProvider, IJwtAuthenticationStateProvider
 {
     private const string AuthLocalStorageKey = "auth_token";
     private readonly ClaimsPrincipal _unauthenticated = new(new ClaimsIdentity());
@@ -23,7 +23,7 @@ public class CookieAuthenticationStateProvider(IAuthApi authApi, ILocalStorageSe
                 JwtSecurityTokenHandler handler = new();
                 JwtSecurityToken? jwtToken = handler.ReadJwtToken(token);
                 ClaimsIdentity claimsIdentity =
-                    new(jwtToken.Claims, nameof(CookieAuthenticationStateProvider));
+                    new(jwtToken.Claims, nameof(JwtAuthenticationStateProvider));
                 user = new ClaimsPrincipal(claimsIdentity);
             }
         }
