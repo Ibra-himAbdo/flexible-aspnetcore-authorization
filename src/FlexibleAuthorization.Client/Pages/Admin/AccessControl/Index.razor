@@ -6,4 +6,58 @@
 
 <h1>Access Control</h1>
 
-<p>This is a description.</p>
+@if (_isLoading)
+{
+    <p><em>Loading access control configuration...</em></p>
+}
+else if (!string.IsNullOrEmpty(_errorMessage))
+{
+    <div class="alert alert-danger">@_errorMessage</div>
+}
+else if (_accessControlVm is null)
+{
+    <p>No data available.</p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Permissions</th>
+            @foreach (var role in _accessControlVm.Roles)
+            {
+                <th>@role.Name</th>
+            }
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var permission in _accessControlVm.AvailablePermissions)
+        {
+            <tr>
+                <th>@permission.ToString()</th>
+                @foreach (var role in _accessControlVm.Roles)
+                {
+                    <th>
+                        <FlexibleAuthorizeView Permissions="@Permissions.ConfigureAccessControl">
+                            <Authorized>
+                                <input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    checked="@role.Has(permission)"
+                                    @onchange="(args) => Set(role, permission, (bool)args.Value!)"/>
+                            </Authorized>
+                            <NotAuthorized>
+                                <input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    checked="@role.Has(permission)"
+                                    disabled="disabled"/>
+                            </NotAuthorized>
+                        </FlexibleAuthorizeView>
+                    </th>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+}

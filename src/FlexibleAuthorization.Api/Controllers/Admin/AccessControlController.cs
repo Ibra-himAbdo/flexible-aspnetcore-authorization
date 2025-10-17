@@ -12,7 +12,7 @@ public class AccessControlController : BaseApiController
 
     [HttpGet]
     [Authorize(Permissions.ViewAccessControl)]
-    public async Task<ActionResult<AccessControlVm>> GetConfiguration()
+    public async Task<ActionResult<AccessControlViewModel>> GetConfiguration()
     {
         List<Role> roles = await _roleManager.Roles
             .ToListAsync();
@@ -22,7 +22,7 @@ public class AccessControlController : BaseApiController
             .OrderBy(r => r.Name)
             .ToList();
 
-        return new AccessControlVm(roleDtos);
+        return new AccessControlViewModel(roleDtos);
     }
 
     [HttpPut]

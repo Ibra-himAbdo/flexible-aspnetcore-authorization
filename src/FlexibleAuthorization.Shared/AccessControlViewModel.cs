@@ -1,12 +1,12 @@
 namespace FlexibleAuthorization.Shared;
 
-public class AccessControlVm
+public class AccessControlViewModel
 {
-    internal AccessControlVm()
+    internal AccessControlViewModel()
     {
     }
 
-    public AccessControlVm(List<RoleDto> roles)
+    public AccessControlViewModel(List<RoleDto> roles)
     {
         Roles = roles;
 
