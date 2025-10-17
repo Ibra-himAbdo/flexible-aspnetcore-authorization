@@ -1,6 +1,6 @@
 namespace FlexibleAuthorization.Client;
 
-public interface IRolesApi
+public interface IRolesApi : IFlexibleAuthorizationApi
 {
     [Get("/api/Admin/Roles")]
     Task<ApiResponse<IEnumerable<RoleDto>>> GetRolesAsync();

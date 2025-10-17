@@ -1,6 +1,6 @@
 namespace FlexibleAuthorization.Client;
 
-public interface IUsersApi
+public interface IUsersApi : IFlexibleAuthorizationApi
 {
     [Get("/api/Admin/Users")]
     Task<ApiResponse<IEnumerable<UserDto>>> GetUsersAsync();

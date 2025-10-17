@@ -1,6 +1,6 @@
 namespace FlexibleAuthorization.Client;
 
-public interface IAccessControlApi
+public interface IAccessControlApi : IFlexibleAuthorizationApi
 {
     [Get("/api/Admin/AccessControl")]
     Task<ApiResponse<AccessControlVm>> GetConfigurationAsync();

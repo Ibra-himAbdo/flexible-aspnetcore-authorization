@@ -17,20 +17,7 @@ builder.Services.AddScoped(sp =>
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddRefitClient<IAuthApi>()
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri("https://localhost:7288"));
-
-builder.Services
-    .AddRefitClient<IAccessControlApi>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7288"));
-
-builder.Services
-    .AddRefitClient<IRolesApi>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7288"));
-
-builder.Services
-    .AddRefitClient<IUsersApi>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7288"));
+builder.Services.AddFlexibleAuthorizationClients("https://localhost:7288");
 
 await builder.Build()
     .RunAsync();
