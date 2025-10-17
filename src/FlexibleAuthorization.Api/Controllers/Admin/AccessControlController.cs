@@ -28,7 +28,7 @@ public class AccessControlController : BaseApiController
     [HttpPut]
     [Authorize(Permissions.ConfigureAccessControl)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> UpdateConfiguration(RoleDto updatedRole)
+    public async Task<ActionResult> UpdateConfiguration([FromBody] RoleDto updatedRole)
     {
         Role? role = await _roleManager.FindByIdAsync(updatedRole.Id);
 

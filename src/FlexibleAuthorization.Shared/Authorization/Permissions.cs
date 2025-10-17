@@ -1,6 +1,7 @@
 namespace FlexibleAuthorization.Shared;
 
 [Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum Permissions
 {
     None = 0,
@@ -13,5 +14,4 @@ public enum Permissions
     Forecast = 64,
     ViewAccessControl = 128,
     All = ~None
-    
 }

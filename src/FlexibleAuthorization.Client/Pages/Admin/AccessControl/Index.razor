@@ -6,13 +6,14 @@
 
 <h1>Access Control</h1>
 
+
+@if (!string.IsNullOrEmpty(_errorMessage))
+{
+    <div class="alert alert-danger">@_errorMessage</div>
+}
 @if (_isLoading)
 {
     <p><em>Loading access control configuration...</em></p>
-}
-else if (!string.IsNullOrEmpty(_errorMessage))
-{
-    <div class="alert alert-danger">@_errorMessage</div>
 }
 else if (_accessControlVm is null)
 {

@@ -3,8 +3,8 @@ namespace FlexibleAuthorization.Client;
 public interface IAccessControlApi : IFlexibleAuthorizationApi
 {
     [Get("/api/Admin/AccessControl")]
-    Task<ApiResponse<AccessControlViewModel>> GetConfigurationAsync();
+    Task<ApiResponse<AccessControlViewModel>> GetConfigurationAsync(CancellationToken cancellationToken);
 
     [Put("/api/Admin/AccessControl")]
-    Task<ApiResponse<object>> UpdateConfigurationAsync([Body] RoleDto updatedRole);
+    Task<ApiResponse<object>> UpdateConfigurationAsync([Body] RoleDto updatedRole, CancellationToken cancellationToken);
 }

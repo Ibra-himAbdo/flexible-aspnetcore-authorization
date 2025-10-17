@@ -19,7 +19,9 @@ public partial class Index
         try
         {
             _isLoading = true;
-            ApiResponse<AccessControlViewModel> response = await AccessControlApi.GetConfigurationAsync();
+            using CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(15));
+            ApiResponse<AccessControlViewModel> response =
+                await AccessControlApi.GetConfigurationAsync(cancellationTokenSource.Token);
 
             if (response.IsSuccessStatusCode)
             {
@@ -52,7 +54,10 @@ public partial class Index
         try
         {
             role.Set(permission, granted);
-            var response = await AccessControlApi.UpdateConfigurationAsync(role);
+
+            using CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(15));
+            ApiResponse<object> response =
+                await AccessControlApi.UpdateConfigurationAsync(role, cancellationTokenSource.Token);
 
             if (!response.IsSuccessStatusCode)
             {

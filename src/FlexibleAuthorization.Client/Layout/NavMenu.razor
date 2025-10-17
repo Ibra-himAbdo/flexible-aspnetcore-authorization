@@ -11,48 +11,54 @@
     <nav class="nav flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                <i class="fas fa-home me-2"></i> Home
             </NavLink>
         </div>
+
         <FlexibleAuthorizeView Permissions="Permissions.Counter">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="counter">
-                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+                    <i class="fas fa-square-plus me-2"></i> Counter
                 </NavLink>
             </div>
         </FlexibleAuthorizeView>
+
         <FlexibleAuthorizeView Permissions="Permissions.Forecast">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="weather">
-                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
+                    <i class="fas fa-list-alt me-2"></i> Weather
                 </NavLink>
             </div>
         </FlexibleAuthorizeView>
+
         <FlexibleAuthorizeView Permissions="@(Permissions.ViewUsers | Permissions.ManageUsers)">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="/admin/users">
-                    <span class="oi oi-people" aria-hidden="true"></span> Users
+                    <i class="fas fa-users me-2"></i> Users
                 </NavLink>
             </div>
         </FlexibleAuthorizeView>
+
         <AuthorizeView>
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="claims">
-                    <span class="oi oi-document" aria-hidden="true"></span> Claims
+                    <i class="fas fa-file-alt me-2"></i> Claims
                 </NavLink>
             </div>
         </AuthorizeView>
+
         <FlexibleAuthorizeView Permissions="@(Permissions.ViewRoles | Permissions.ManageRoles)">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="admin/roles">
-                    <span class="oi oi-badge" aria-hidden="true"></span> Roles
+                    <i class="fas fa-award me-2"></i> Roles
                 </NavLink>
             </div>
         </FlexibleAuthorizeView>
+
         <FlexibleAuthorizeView Permissions="@(Permissions.ViewAccessControl | Permissions.ConfigureAccessControl)">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="admin/access-control">
-                    <span class="oi oi-lock-locked" aria-hidden="true"></span> Access Control
+                    <i class="fas fa-lock me-2"></i> Access Control
                 </NavLink>
             </div>
         </FlexibleAuthorizeView>
@@ -68,5 +74,4 @@
     {
         _collapseNavMenu = !_collapseNavMenu;
     }
-
 }

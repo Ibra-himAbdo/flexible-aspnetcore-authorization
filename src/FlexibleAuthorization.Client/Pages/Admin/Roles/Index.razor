@@ -7,3 +7,71 @@
 <h1>Roles</h1>
 
 <p>This is a description.</p>
+
+@if (!string.IsNullOrEmpty(_errorMessage))
+{
+    <div class="alert alert-danger">@_errorMessage</div>
+}
+
+<table class="table table-striped table-hover w-50">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Roles)
+        {
+            <tr>
+                <td>
+                    @if (role != _roleToEdit)
+                    {
+                        <input type="text" class="form-control-plaintext" style="padding-left: 0.75rem"
+                               value="@role.Name" readonly />
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control" @bind="role.Name" />
+                    }
+                </td>
+                <td>
+                    <FlexibleAuthorizeView Permissions="@Permissions.ManageRoles">
+                        @if (role != _roleToEdit)
+                        {
+                            <button class="btn btn-secondary btn-sm me-1" @onclick="() => EditRole(role)">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" @onclick="() => DeleteRole(role)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-success btn-sm me-1" @onclick="UpdateRole">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="btn btn-warning btn-sm" @onclick="CancelEditRole">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                        }
+                    </FlexibleAuthorizeView>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <FlexibleAuthorizeView Permissions="@Permissions.ManageRoles">
+        <tfoot>
+            <tr>
+                <td>
+                    <input type="text" class="form-control" placeholder="New Role..." @bind="_newRoleName" />
+                </td>
+                <td>
+                    <button class="btn btn-primary" @onclick="AddRole">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </td>
+            </tr>
+        </tfoot>
+    </FlexibleAuthorizeView>
+</table>

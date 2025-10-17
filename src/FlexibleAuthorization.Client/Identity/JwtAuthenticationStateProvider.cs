@@ -12,7 +12,8 @@ public class JwtAuthenticationStateProvider(IAuthApi authApi, ILocalStorageServi
 
         try
         {
-            string? token = await localStorage.GetItemAsync<string>(AuthLocalStorageKey);
+            using CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(15));
+            string? token = await localStorage.GetItemAsync<string>(AuthLocalStorageKey, cancellationTokenSource.Token);
             if (!string.IsNullOrWhiteSpace(token))
             {
                 JwtSecurityTokenHandler handler = new();
@@ -35,12 +36,13 @@ public class JwtAuthenticationStateProvider(IAuthApi authApi, ILocalStorageServi
     {
         try
         {
-            ApiResponse<LoginResponse> response = await authApi.LoginAsync(credentials);
+            using CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(15));
+            ApiResponse<LoginResponse> response = await authApi.LoginAsync(credentials, cancellationTokenSource.Token);
 
             if (response.IsSuccessStatusCode)
             {
                 string? token = response.Content?.Token;
-                await localStorage.SetItemAsync(AuthLocalStorageKey, token);
+                await localStorage.SetItemAsync(AuthLocalStorageKey, token, cancellationTokenSource.Token);
                 NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
                 return new AuthResult { Succeeded = true };
             }
