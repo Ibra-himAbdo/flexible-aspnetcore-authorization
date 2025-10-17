@@ -1,5 +1,3 @@
-
-
 WebAssemblyHostBuilder builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
@@ -21,6 +19,18 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddRefitClient<IAuthApi>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri("https://localhost:7288"));
+
+builder.Services
+    .AddRefitClient<IAccessControlApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7288"));
+
+builder.Services
+    .AddRefitClient<IRolesApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7288"));
+
+builder.Services
+    .AddRefitClient<IUsersApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7288"));
 
 await builder.Build()
     .RunAsync();

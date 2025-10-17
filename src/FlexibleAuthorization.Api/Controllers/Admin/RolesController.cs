@@ -47,13 +47,13 @@ public class RolesController : BaseApiController
     {
         if (id != updatedRole.Id)
         {
-            return BadRequest();
+            return BadRequest("Role ID mismatch.");
         }
 
         Role? role = await _roleManager.FindByIdAsync(id);
 
         if (role == null)
-            return NotFound();
+            return NotFound("Role not found.");
 
         role.Name = updatedRole.Name;
 
@@ -72,7 +72,7 @@ public class RolesController : BaseApiController
         Role? role = await _roleManager.FindByIdAsync(id);
         if (role == null)
         {
-            return NotFound();
+            return NotFound("Role not found.");
         }
 
         await _roleManager.DeleteAsync(role);

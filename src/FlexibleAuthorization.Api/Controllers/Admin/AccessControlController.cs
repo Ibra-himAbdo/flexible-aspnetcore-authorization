@@ -32,8 +32,8 @@ public class AccessControlController : BaseApiController
     {
         Role? role = await _roleManager.FindByIdAsync(updatedRole.Id);
 
-        if (role == null) return NoContent();
-        
+        if (role == null) return BadRequest("Role not found.");
+
         role.Permissions = updatedRole.Permissions;
         await _roleManager.UpdateAsync(role);
 

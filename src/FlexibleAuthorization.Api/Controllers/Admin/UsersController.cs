@@ -45,7 +45,7 @@ public class UsersController : BaseApiController
         User? user = await _userManager.FindByIdAsync(id);
 
         if (user is null)
-            return NotFound();
+            return NotFound("User not found.");
 
         UserDto dto = new UserDto(user.Id, user.UserName ?? string.Empty, user.Email ?? string.Empty);
 
@@ -64,12 +64,12 @@ public class UsersController : BaseApiController
     public async Task<IActionResult> PutUser(string id, UserDto updatedUser)
     {
         if (id != updatedUser.Id)
-            return BadRequest();
+            return BadRequest("User ID mismatch.");
 
         User? user = await _userManager.FindByIdAsync(id);
 
         if (user is null)
-            return NotFound();
+            return NotFound("User not found.");
 
         user.UserName = updatedUser.UserName;
         user.Email = updatedUser.Email;

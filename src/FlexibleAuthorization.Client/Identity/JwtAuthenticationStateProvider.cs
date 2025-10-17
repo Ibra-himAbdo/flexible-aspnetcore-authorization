@@ -6,11 +6,6 @@ public class JwtAuthenticationStateProvider(IAuthApi authApi, ILocalStorageServi
     private const string AuthLocalStorageKey = "auth_token";
     private readonly ClaimsPrincipal _unauthenticated = new(new ClaimsIdentity());
 
-    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-    };
-
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
         ClaimsPrincipal user = _unauthenticated;
